@@ -49,6 +49,20 @@ int main()
 	srv.sin_addr.s_addr = INADDR_ANY;	//Specifies IP Address Where Socket In Run/Bind
 	memset(&(srv.sin_zero),0,8);
 
+	//set sockopt
+
+	int nOptVal = 0;
+	int nOptLen = sizeof(nOptVal);
+	nRet = setsockopt(nSocket,SOL_SOCKET,SO_REUSEADDR,(const char*)&nOptVal,nOptLen);
+	if(!nRet)
+	{
+		cout<<"The Setsockopt called Success"<<endl;
+	}
+	else
+	{
+		cout<<"The Setsockopt callled failed"<<endl;
+	}
+
 	//Bind the socket to local port 
 	nRet = bind(nSocket,(sockaddr*) & srv,sizeof(sockaddr));  //Binding Socket with using sockaddr_in information.
 	if(nRet < 0)
